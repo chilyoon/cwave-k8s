@@ -15,7 +15,7 @@ terraform {
     }
   }
   backend "s3" {
-    bucket = "cloudwave-tf-admin"
+    bucket = "cloudwave-tf-admin-1"
     key    = "cwave/terraform.tfstate"
     region = "ap-northeast-2"
   }

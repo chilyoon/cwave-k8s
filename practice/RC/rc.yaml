@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: goapp-rc
+spec:
+  replicas: 5
+  # 감시 대상 선택
+  selector:
+    app: goapp-pod
+  # pod template
+  template:
+    metadata:
+      # name는 안같아도됨
+      name: goapp
+      # labels의 이름은 selector의 이름과 같아야 한다. 필수
+      labels:
+        app: goapp-pod
+    spec:
+      containers:
+        - name: goapp-container
+          image: dangtong/goapp
+          ports:
+            - containerPort: 8080

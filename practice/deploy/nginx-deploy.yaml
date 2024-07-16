@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: nginx
+  # startegy는 deploy와 연관있지 pod와 연관이 없다.
+  strategy: 
+    type: RollingUpdate # Recreate 타입은 두가지 밖에 없다.
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 2
+      # 최대의 pod 개수 -> 6
+      # v1의 처음 최대 개수 -> 3
+      # 동시에 3개가 교체된다.(파도1, 밑에2)
+      # maxSurge가 늘어날수록 재가동 속도가 빨라진다.
+      # maxUnavailable가 늘어날수록 재가동 속도가 빨라진다.
+      # 둘다 숫자가 늘어나면 폭이 늘어나기 때문.
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80

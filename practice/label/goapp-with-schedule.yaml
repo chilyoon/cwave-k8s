@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: goapp
+  # 명시적으로 namespace 선언 가능
+  namespace: my-ns
+  labels:
+    name: goapp
+spec:
+  nodeSelector:
+    memsize: "high"
+  containers:
+  - name: goapp
+    image: dangtong/goapp
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    ports:
+      - containerPort: 8080
