@@ -1,0 +1,44 @@
+# aws class 추가
+apiVersion: networking.k8s.io/v1
+kind: IngressClass
+metadata:
+  name: alb-ingress-class
+spec:
+  controller: ingress.k8s.aws/alb
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress
+  # 어노테이션 두개 추가
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/traget-type: ip
+  labels:
+    name: ingress
+# AWS는 ingress 클래스를 선언해야한다.
+spec:
+  ingressClassName: "alb-ingress-class"
+  # 하나는 goapp, 하나는 nginx
+  rules:
+  # 없는 주소로 해야함 있는 주소로 간다면 겹치진다.
+  - host: nginx.duldul1.com
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: nginx-lb
+            port: 
+              number: 80
+  - host: goapp.duldul1.com
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: goapp-lb
+            port: 
+              number: 80

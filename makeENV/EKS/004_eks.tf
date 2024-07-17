@@ -10,6 +10,7 @@ module "eks" {
   cluster_endpoint_public_access  = true
   cluster_endpoint_private_access = true
 
+  # AWS EKS 안에 추가기능을 보면 기능들이 있는데 그걸 코드로 구현한것
   cluster_addons = {
     coredns = {
       most_recent = true
@@ -34,8 +35,8 @@ module "eks" {
   eks_managed_node_groups = {
     green = {
       min_size     = 2
-      max_size     = 2
-      desired_size = 2
+      max_size     = 4
+      desired_size = 4
 
       instance_types = ["m7i.large"]
     }

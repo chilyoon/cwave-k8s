@@ -3,3 +3,4 @@ makeENV/eks/.terraform.lock
 makeENV/eks/.terraform.lock.hcl
 makeENV/IDE/.env
 makeENV/IDE/password.txt
+makeENV/EKS/cwave.pem
