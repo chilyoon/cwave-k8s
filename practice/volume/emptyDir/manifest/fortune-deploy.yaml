@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fortune-deploy
+spec:
+  selector:
+    matchLabels:
+      app: fortune
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: fortune
+    spec:
+      containers:
+      # 명언을 계속 만들게 생성
+      - name: html-generator
+        image: nby5699/fortune
+        # image: dangtong/fortunek8s
+        # 해당 경로로 html volume을 마운트
+        volumeMounts:
+        - name: html
+          mountPath: /var/htdocs
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "200m"
+        # 통신하는게 없으니 port가 필요없다.
+        # ports:
+        # - containerPort: <Port>
+      - name: web-server
+        image: nginx:alpine
+        volumeMounts:
+        - name: html
+          mountPath: /usr/share/nginx/html # 마운트 경로가 다르다. nginx의 root 디렉토리 경로
+          readOnly: true # RO로 읽게만 설정.
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "200m"
+        ports:
+        - containerPort: 80
+      # EmptyDir volume 생성
+      volumes:
+      - name: html
+        emptyDir: {}
+

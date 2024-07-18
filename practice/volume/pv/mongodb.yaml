@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mongodb
+  labels:
+    name: mongodb
+spec:
+  containers:
+  - name: mongodb
+    image: mongo
+    volumeMounts:
+    - name: mongodb-data
+      # mongodb는 /data/db에 지정해야한다. 임의 지정 불가능.
+      mountPath: /data/db
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    ports:
+      - containerPort: 27017
+        protocol: TCP
+  volumes:
+  - name: mongodb-data
+    #pvc.yaml에 있는 이름
+    persistentVolumeClaim:
+      # gp3로 바꾸고 속도가 더 빨라진다.
+      claimName: mongodb-pvc-dynamic
+      

@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-configvol
+spec:
+  containers:
+  - image: nginx:1.7.9
+    name: web-server
+    # config로 volume 취급
+    volumeMounts:
+    - name: config
+      mountPath: /etc/nginx/conf.d
+      readOnly: true
+    ports:
+    - containerPort: 8080
+      protocol: TCP
+  volumes:
+  - name: config
+    configMap:
+      # configmap을 볼륨으로 가져온다.
+      name: fortune-config

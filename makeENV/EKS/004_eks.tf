@@ -22,6 +22,10 @@ module "eks" {
       cluster_name = var.cluster-name
       most_recent = true
     }
+    # aws ebs 추가
+    aws-ebs-csi-driver = {
+      most_recent = true
+    }
   }
 
   vpc_id                   = aws_vpc.vpc.id
