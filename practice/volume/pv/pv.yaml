@@ -13,7 +13,7 @@ spec:
   # Delete : pod가 삭제되었다 뜨면 빈상태로 시작
   # Recycle : rm -rf /&로 모든 데이터 삭제
   # 만약 mongo에서 mysql로 바꿀땐 Retain 대부분 Retain을 많이 쓴다.
-  # 3개를 결정하는 요인은 stateful이냐 stateless인가로 결정된다.
+  # 3개를 결정하는 요인은 stateful이냐 stateless인가로 결 정된다.
   # stateful -> 뭔가 저장된다 싶으면 stateful
   # stateless -> redis를 통해 redis에 다 저장
   # aws driver 설정 google이나 azure에서는 설정할 필요없이 자동으로 되어있다.

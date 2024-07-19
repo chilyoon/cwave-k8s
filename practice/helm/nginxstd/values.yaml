@@ -1,0 +1,8 @@
+environment: development
+# values.container.name ~~
+container:
+  name: nginx
+  port: 80
+  image: nginx
+  tag: latest
+replicas: 2

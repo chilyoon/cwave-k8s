@@ -20,7 +20,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - local_code:/code/local
       - remote_code:/code/remote
-      - vscode:/config
+      - config:/config
     # depends_on:
     #   server:
     #     condition: service_completed_successfully
@@ -49,9 +49,9 @@ volumes:
   remote_code:
     external: true
     name: remote_code
-  vscode:
+  config:
     external: true
-    name: vscode
+    name: config
 
 secrets:
   code-server-password:
